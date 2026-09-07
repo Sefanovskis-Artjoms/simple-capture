@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <clipPath id="inside-frame">
+      <rect x="2" y="2" width="28" height="28"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#inside-frame)">
+    <circle cx="22.5" cy="6.4833" r="13" fill="#F5C518"/>
+    <polygon points="9.5,29 35.5,29 22.5,6.4833" fill="#2E8B3A"/>
+    <polygon points="-3.5,29 22.5,29 9.5,6.4833" fill="#4CAF50"/>
+  </g>
+
+  <rect x="1" y="1" width="30" height="30" fill="none" stroke="#FFFFFF" stroke-width="1.25"
+        stroke-dasharray="2 4" stroke-linecap="square"/>
+
+  <g transform="translate(2.2,2.2) scale(1.6)">
+    <path fill="#FFFFFF" stroke="#1A1A1A" stroke-width="0.53" stroke-linejoin="round"
+          transform="translate(-2.2,-2.2)"
+          d="M2.2,2.2 L2.2,14.4 L5.5,11.2 L8.2,17.2 L10.1,16.3 L7.3,10.2 L11.8,10.2 Z"/>
+  </g>
+</svg>

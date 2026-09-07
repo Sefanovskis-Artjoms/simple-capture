@@ -4,3 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+egui = "0.31"
+egui-winit = "0.31"
+egui_glow = { version = "0.31", features = ["winit", "egui-winit"] }
+global-hotkey = "0.8.0"
+glow = "0.16"
+glutin = "0.32"
+glutin-winit = "0.5"
+image = { version = "0.25.10", default-features = false, features = ["png"] }
+tray-icon = { version = "0.24.2", default-features = false }
+winit = "0.30"
