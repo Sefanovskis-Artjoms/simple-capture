@@ -20,13 +20,14 @@ Requirements → `AGENTS.md` (local).
 - [x] Settings UI layout: hotkey fields (primary, secondary, open settings) + Save button (egui)
 - [x] Wire input fields to in-memory state (typed text is stored in app state)
 - [x] Save button prints current field values to the console
-- 👉 [ ] On field blur: try registering that shortcut; if it fails, show an error under the field
-- [ ] If any field is invalid, disable the Save button
-- [ ] If Save fails to apply shortcuts, show an info message under the Save button
-- [ ] Persist shortcuts to disk and reload them on next app start
-- [ ] Active monitor capture → clipboard
-- [ ] All monitors capture → clipboard
-- [ ] Screen freeze overlay
+- [x] On field blur: try registering that shortcut; if it fails, show an error under the field
+- [x] If any field is invalid, disable the Save button
+- [x] If Save fails to apply shortcuts, show an info message under the Save button
+- [x] Persist shortcuts to disk and reload them on next app start
+- [x] Active monitor capture → clipboard
+- [x] All monitors capture → clipboard (stitched into one image)
+- [x] Capture success flash (white ~10% opacity, 200ms) on captured monitor(s)
+- 👉 [ ] Screen freeze overlay
 - [ ] Mouse region selection
 - [ ] Copy selected region to clipboard on confirm
 - [ ] `Esc` cancels
