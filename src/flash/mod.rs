@@ -1,13 +1,9 @@
-//! Brief white flash after a successful capture (UX feedback).
-//!
-//! Uses a lightweight Win32 layered popup (no winit / softbuffer) so the flash
-//! appears quickly and stays subtle. Capture must finish before this runs.
+//! Brief white flash after a successful simple capture.
 
 use std::time::Duration;
 
 use crate::capture::MonitorRect;
 
-/// Whole-window opacity (0 = invisible, 255 = solid). ~6% keeps the flash light.
 const FLASH_ALPHA: u8 = 16;
 pub const FLASH_DURATION: Duration = Duration::from_millis(200);
 
@@ -152,8 +148,6 @@ mod win {
             SetLayeredWindowAttributes(hwnd, COLORREF(0), FLASH_ALPHA, LWA_ALPHA)
                 .map_err(|_| "Could not set flash opacity".to_owned())?;
             let _ = ShowWindow(hwnd, SW_SHOWNOACTIVATE);
-            // ShowWindow only queues visibility — paint now so the flash is seen
-            // before the main thread continues (or yields to clipboard work).
             let _ = UpdateWindow(hwnd);
             let _ = RedrawWindow(
                 Some(hwnd),
@@ -166,12 +160,11 @@ mod win {
         Ok(hwnd)
     }
 
-    /// Click-through even if EX_TRANSPARENT is ignored by a WM.
     unsafe extern "system" fn flash_wnd_proc(
         hwnd: HWND,
         msg: u32,
         wparam: WPARAM,
-        lparam: LPARAM, 
+        lparam: LPARAM,
     ) -> LRESULT {
         if msg == WM_NCHITTEST {
             return LRESULT(HTTRANSPARENT as isize);

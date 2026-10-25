@@ -1,4 +1,4 @@
-//! Lean GDI BitBlt capture → top-down BGRA (no RGBA round-trip).
+//! GDI BitBlt capture (Windows).
 
 use std::mem::size_of;
 
@@ -9,14 +9,8 @@ use windows::Win32::Graphics::Gdi::{
 };
 use windows::Win32::UI::WindowsAndMessaging::GetDesktopWindow;
 
-/// Raw desktop pixels in top-down BGRA order (native GDI / clipboard channel order).
-pub struct BgraImage {
-    pub width: u32,
-    pub height: u32,
-    pub bytes: Vec<u8>,
-}
+use super::image_buf::BgraImage;
 
-/// Capture a virtual-desktop rectangle via BitBlt + GetDIBits.
 pub fn capture_rect(x: i32, y: i32, width: u32, height: u32) -> Result<BgraImage, String> {
     if width == 0 || height == 0 {
         return Err("Invalid capture size".to_owned());
@@ -59,7 +53,6 @@ pub fn capture_rect(x: i32, y: i32, width: u32, height: u32) -> Result<BgraImage
             return Err("BitBlt failed".to_owned());
         }
 
-        // Negative height ⇒ top-down BGRA in `buffer`.
         let mut info = BITMAPINFO {
             bmiHeader: BITMAPINFOHEADER {
                 biSize: size_of::<BITMAPINFOHEADER>() as u32,

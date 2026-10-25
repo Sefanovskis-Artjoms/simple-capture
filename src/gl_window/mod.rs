@@ -1,4 +1,4 @@
-//! OpenGL window context for egui (adapted from egui_glow examples).
+//! OpenGL window context for egui (settings + editor).
 #![allow(unsafe_code)]
 
 use std::num::NonZeroU32;
@@ -13,14 +13,19 @@ pub struct GlutinWindowContext {
 }
 
 impl GlutinWindowContext {
-    pub unsafe fn new(event_loop: &winit::event_loop::ActiveEventLoop) -> Self {
+    pub unsafe fn new(
+        event_loop: &winit::event_loop::ActiveEventLoop,
+        title: &str,
+        width: f64,
+        height: f64,
+    ) -> Self {
         use glutin::context::NotCurrentGlContext;
         use glutin::display::{GetGlDisplay, GlDisplay};
         use glutin::prelude::GlSurface;
 
         let window_attributes = winit::window::WindowAttributes::default()
-            .with_title("simple-capture — Settings")
-            .with_inner_size(winit::dpi::LogicalSize::new(480.0, 320.0))
+            .with_title(title)
+            .with_inner_size(winit::dpi::LogicalSize::new(width, height))
             .with_visible(false);
 
         let config_template = glutin::config::ConfigTemplateBuilder::new()
@@ -68,7 +73,7 @@ impl GlutinWindowContext {
                 .expect("failed to finalize GL window")
         });
 
-        let (width, height): (u32, u32) = window.inner_size().into();
+        let (w, h): (u32, u32) = window.inner_size().into();
         let surface_attributes =
             glutin::surface::SurfaceAttributesBuilder::<glutin::surface::WindowSurface>::new()
                 .build(
@@ -76,8 +81,8 @@ impl GlutinWindowContext {
                         .window_handle()
                         .expect("failed to get window handle")
                         .as_raw(),
-                    NonZeroU32::new(width).unwrap_or(NonZeroU32::MIN),
-                    NonZeroU32::new(height).unwrap_or(NonZeroU32::MIN),
+                    NonZeroU32::new(w).unwrap_or(NonZeroU32::MIN),
+                    NonZeroU32::new(h).unwrap_or(NonZeroU32::MIN),
                 );
 
         let gl_surface = unsafe {

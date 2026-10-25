@@ -3,6 +3,17 @@ name = "simple-capture"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+default = ["flash", "region", "drawing", "editor"]
+# Success flash after simple captures (active / all screens).
+flash = []
+# Freeze overlay + region selection (primary & secondary flows).
+region = []
+# Annotation toolkit on primary overlay and secondary editor.
+drawing = []
+# Separate ShareX-style editor window after secondary capture.
+editor = []
+
 [dependencies]
 directories = "6.0.0"
 egui = "0.31"
@@ -13,8 +24,10 @@ glow = "0.16"
 glutin = "0.32"
 glutin-winit = "0.5"
 image = { version = "0.25.10", default-features = false, features = ["png"] }
+rfd = "0.17"
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.151"
+softbuffer = "0.4.8"
 tray-icon = { version = "0.24.2", default-features = false }
 windows = { version = "0.62.2", features = ["Win32_Foundation", "Win32_UI_WindowsAndMessaging", "Win32_Graphics_Gdi", "Win32_System_LibraryLoader", "Win32_System_DataExchange", "Win32_System_Memory", "Win32_System_Ole"] }
 winit = "0.30"

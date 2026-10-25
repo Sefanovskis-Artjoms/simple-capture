@@ -1,6 +1,6 @@
 //! Fast Windows clipboard image write (CF_DIBV5 from top-down BGRA).
 
-use crate::gdi_capture::BgraImage;
+use crate::capture::BgraImage;
 
 /// Copy a top-down BGRA image to the clipboard (no PNG, no R↔B swap).
 pub fn copy_bgra_to_clipboard(image: BgraImage) -> Result<(), String> {
@@ -27,7 +27,7 @@ mod win {
     use windows::Win32::System::Memory::{GlobalAlloc, GlobalLock, GlobalUnlock, GMEM_MOVEABLE};
     use windows::Win32::System::Ole::CF_DIBV5;
 
-    use crate::gdi_capture::BgraImage;
+    use crate::capture::BgraImage;
 
     #[allow(non_upper_case_globals)]
     const LCS_sRGB: u32 = 0x7352_4742;
@@ -40,7 +40,6 @@ mod win {
             return Err("Unexpected image buffer size".to_owned());
         }
 
-        // CF_DIB wants bottom-up rows; channels are already BGRA.
         let mut dib_pixels = vec![0u8; image.bytes.len()];
         for y in 0..height {
             let src = (height - 1 - y) * row_bytes;
